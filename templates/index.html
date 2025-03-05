@@ -14,15 +14,18 @@
         }
         .container {
             display: flex;
-            justify-content: space-around;
-            padding: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
         }
         .panel {
             background: #fff;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             padding: 20px;
-            width: 45%;
+            width: 100%;
+            max-width: 45%;
+            margin: 10px;
         }
         h1 {
             text-align: center;
@@ -39,7 +42,6 @@
         }
         select, button, input[type="date"] {
             width: 100%;
-            max-width: 100%;
             padding: 10px;
             margin-top: 10px;
             border: 1px solid #ddd;
@@ -68,12 +70,31 @@
             margin: 5px 0;
             border-radius: 4px;
         }
+        @media (max-width: 768px) {
+            .container {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            .panel {
+                width: 100%;
+                max-width: 90%;
+            }
+        }
+        @media (max-width: 500px) {
+            .panel {
+                width: 100%;
+                max-width: 80%;
+            }
+        }
+
+
     </style>
 </head>
 <body>
     <h1>Employee Duty Management</h1>
     <div class="container">
-        <div class="panel">
+        <div class="panel left-panel">
             <h2>Employees on Leave</h2>
             <form method="POST">
                 <label for="date">Select Date:</label>
@@ -98,7 +119,7 @@
                 <button type="submit">Update Hours</button>
             </form>
         </div>
-        <div class="panel">
+        <div class="panel right-panel">
             <h2>Employee Hours</h2>
             <div class="timestamp">
                 {% if last_updated %}
