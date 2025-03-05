@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Duty Management</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            padding: 30px;
+        }
+        .panel {
+            background: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            width: 45%;
+        }
+        h1 {
+            text-align: center;
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        h2 {
+            color: #007BFF;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 5px;
+        }
+        select, button, input[type="date"] {
+            width: 100%;
+            max-width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .timestamp {
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+        }
+        .employee-list div {
+            background: #f8f9fa;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Duty Management</h1>
+    <div class="container">
+        <div class="panel">
+            <h2>Employees on Leave</h2>
+            <form method="POST">
+                <label for="date">Select Date:</label>
+                <input type="date" name="date" id="date">
+                
+                <label for="on_duty">Select Employee for Overtime:</label>
+                <select name="on_duty" id="on_duty">
+                    <option value="" selected>--Select--</option>
+                    {% for employee in employees %}
+                        <option value="{{ loop.index0 }}">{{ employee.name }}</option>
+                    {% endfor %}
+                </select>
+                
+                <label for="on_leave">Select Employee on Leave:</label>
+                <select name="on_leave" id="on_leave">
+                    <option value="" selected>--Select--</option>
+                    {% for employee in employees %}
+                        <option value="{{ loop.index0 }}">{{ employee.name }}</option>
+                    {% endfor %}
+                </select>
+                
+                <button type="submit">Update Hours</button>
+            </form>
+        </div>
+        <div class="panel">
+            <h2>Employee Hours</h2>
+            <div class="timestamp">
+                {% if last_updated %}
+                    <p>Last Updated: {{ last_updated }}</p>
+                {% else %}
+                    <p>No updates yet.</p>
+                {% endif %}
+            </div>
+            <div class="employee-list">
+                {% for employee in employees %}
+                    <div>{{ employee.name }}: <strong>{{ employee.hours }}</strong> hours</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
